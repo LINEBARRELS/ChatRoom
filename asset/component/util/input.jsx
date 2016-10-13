@@ -24,5 +24,4 @@ var Dinput = React.createClass({
 })
 
 // export {Dinput}
-
 module.exports = Dinput
