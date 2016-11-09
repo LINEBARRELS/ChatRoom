@@ -1,10 +1,11 @@
 var React = require('react');
 
 // var Mess = require('./mess.jsx');
-
+var messChange =  require('../../redux/messAction.js');
 var Chat = React.createClass({
      contextTypes: {
-        socket: React.PropTypes.object
+        socket: React.PropTypes.object,
+        store:React.PropTypes.object
      },
      initialBind:function(){
         var ok;
@@ -15,14 +16,24 @@ var Chat = React.createClass({
      newMessage:function(data){
         var tem = this.state.content.slice();
         tem.push(data)
-        this.setState({
-          content:tem
-        })
+        // this.setState({
+        //   content:tem
+        // })
+        if(this.context.store){
+        this.context.store.dispatch(messChange(tem));
+        }
        // console.log(this.state.content.push);
-       this.scrollTop = this.scrollHeight ;
+       // this.scrollTop = this.scrollHeight ;
      },
      getInitialState:function(){
         // console.log(this.context.socket);
+        if(this.context.store){
+         let store = this.context.store;
+         store.subscribe(function(){
+         let newState = store.getState();
+         this.setState({content:newState.content})
+         }.bind(this))
+         }
         return {
           content:[]
         }

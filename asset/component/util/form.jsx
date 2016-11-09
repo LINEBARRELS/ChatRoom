@@ -15,7 +15,7 @@ var Dform = React.createClass({
          //     inputs.push(<Dinput type={this.props.nes[i]}/>);
          // }
          this.props.nes.forEach(function(item,index){
-            inputs.push(<Dinput type={item}/>);
+            inputs.push(<Dinput key={index} type={item}/>);
          })
          inputs.push(<input type='submit' value='提交' className='logsub'/>)
 

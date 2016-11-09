@@ -8,14 +8,22 @@ var session = require('koa-session');
 var socketio = require('socket.io');
 //React support
 var React = require('react');
-var ReactDOMServer = require('./node_modules/react-dom/server.js');
+var ReactDOMServer = require('react-dom/server');
+var Redux = require('redux');
+var ReRedux = require('react-redux');
 require('node-jsx').install({
     extension:'.jsx'
 });
+
+// var rootReducer = require('asset/redux/rootReducer.js')
 //Nedb
 var datastore = require('nedb'),
     db= new datastore({filename:'./DB/userDB.json',autoload:true});
 
+// import { Provider } from 'react-redux'
+// import { createStore } from 'redux'
+
+// import { rootReducer} from ''
 
 
 
@@ -49,6 +57,7 @@ var loginCheck=function *(next){
 var indexRender=function *(){
 
   let index = React.createFactory(Pindex)
+  // var store = createStore(rootReducer)
   this.body = fullPage(ReactDOMServer.renderToString(index()),'main.css','index.js');
 }
 
@@ -86,7 +95,7 @@ var nu = function *(){
 
 //router
 var index=new router();
-index.get('',indexRender);
+index.get('',loginCheck,indexRender);
 
 var user=new router();
 user.get('/:user',loginCheck,nu)
@@ -125,7 +134,7 @@ io.on('connection',function(socket){
    io.emit('news',data)
    console.log(data);
   })
-  io.emit('news','一个新的傻逼加入了撕逼')
+  io.emit('news','有新人加入了撕逼')
 })
 
 

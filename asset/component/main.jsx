@@ -8,10 +8,16 @@ var Footer = require('./util/footer.jsx')
 var List  = require('./util/messList.jsx')
 var index = React.createClass({
 	childContextTypes: {
-    socket: React.PropTypes.object.isRequired
+    socket: React.PropTypes.object,
+    store:React.PropTypes.object
     },
     getChildContext: function() {
-    return { socket: this.props.socket };
+    return { socket: this.props.socket,
+             store:this.props.store
+     };
+    },
+    componentWillMount:function(){
+        console.log('蛤蛤');
     },
 	render:function(){
        
